@@ -14,6 +14,7 @@ var canvas = document.getElementById("canvas"),
       y: window.innerHeight / 2
     },
     colors = ["#30CCC1", "#709996", "#55FF94", "#FF95BB", "#CC30B5"],
+    titleOp = 1,
     seconds, minutes, hours, smallDim;
 
 canvas.width = window.innerWidth;
@@ -21,11 +22,11 @@ canvas.height = window.innerHeight -
   function (elmID) {
       var elmHeight, elmMargin, elm = document.getElementById(elmID);
       if(document.all) {// IE
-          elmHeight = elm.currentStyle.height;
-          elmMargin = parseInt(elm.currentStyle.marginTop, 10) + parseInt(elm.currentStyle.marginBottom, 10); // + "px";
+          elmHeight = parseInt(elm.currentStyle.height);
+          elmMargin = parseInt(elm.currentStyle.marginTop, 10) + parseInt(elm.currentStyle.marginBottom, 10);
       } else {// Mozilla
           elmHeight = parseInt(document.defaultView.getComputedStyle(elm, '').getPropertyValue('height'));
-          elmMargin = parseInt(document.defaultView.getComputedStyle(elm, '').getPropertyValue('margin-top')) + parseInt(document.defaultView.getComputedStyle(elm, '').getPropertyValue('margin-bottom')); // + "px";
+          elmMargin = parseInt(document.defaultView.getComputedStyle(elm, '').getPropertyValue('margin-top')) + parseInt(document.defaultView.getComputedStyle(elm, '').getPropertyValue('margin-bottom'));
       }
       return (elmHeight+elmMargin);
   }("title");
@@ -108,7 +109,12 @@ function animate() {
     split = 0.95;
   } else {
     split -= 0.015;
+    if (titleOp > 0.15) {
+      titleOp -= 0.0015;
+    }
   }
+
+  document.getElementById("title").style.opacity = titleOp;
 
   fontSize = smallDim * 0.29 > 65 ? (smallDim * 0.29 / 5) * 2.3 : 30;
 
@@ -169,3 +175,34 @@ addEventListener("resize", function() {
 
   init();
 });
+
+canvas.addEventListener('click', function(event) {
+  var elem = event.srcElement;
+
+  if (document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement ) {
+    if (document.exitFullscreen) {
+    	document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+    	document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+    	document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+    	document.msExitFullscreen();
+    }
+  }
+  else {
+    if (elem.requestFullscreen) {
+    	elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+    	elem.webkitRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+    	elem.mozRequestFullScreen();
+    } else if (elem.msRequestFullscreen) {
+    	elem.msRequestFullscreen();
+    }
+  }
+
+}, false);

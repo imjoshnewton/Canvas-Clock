@@ -11,12 +11,19 @@ html {
 
 h1 {
   background: $grey;
+  background: -webkit-linear-gradient(right, $white, #FF95BB, #709996, $white);
+  background: linear-gradient(to left, $white, #FF95BB, #709996, $white);
+  background: -o-linear-gradient(right, $white, #FF95BB, #709996, $white);
+  background: -moz-linear-gradient(right, $white, #FF95BB, #709996, $white);
+  -webkit-background-clip: text;
   color: $white;
   font-family: Verdana;
   font-size: 50px;
   font-weight: 300;
   line-height: 55px;
+  opacity: 1;
   text-align: center;
+  -webkit-text-fill-color: transparent;
   text-transform: uppercase;
   width: 100%;
 }
