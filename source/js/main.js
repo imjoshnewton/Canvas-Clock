@@ -126,7 +126,7 @@ function animate() {
 
   c.textBaseline = "middle";
   c.textAlign = "center";
-  c.font = fontSize + "px Verdana";
+  c.font = fontSize + "px 'Roboto'";
 
   c.fillStyle = "rgba(255,255,255,0.95)";
   c.fillText(
