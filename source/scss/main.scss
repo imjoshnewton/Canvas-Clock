@@ -1,6 +1,8 @@
 $black: #000;
 $grey: #333;
 $white: rgba(255, 255, 255, .95);
+$delay-time-1: 1s;
+$delay-time-2: 250ms;
 
 body,
 html {
@@ -29,5 +31,6 @@ h1 {
 }
 
 canvas {
+  animation-delay: $delay-time-2;
   background: $grey;
 }

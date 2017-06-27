@@ -39,8 +39,18 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/source\/scss\/main.scss": {
+	"\/source\/scss\/animate.min.css": {
 		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/build\/css\/animate.min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/source\/scss\/main.scss": {
+		"aP": 1,
 		"bl": 0,
 		"dP": 10,
 		"dS": 0,
@@ -61,7 +71,8 @@
 	"creationDate": 520263515,
 	"displayValue": "Canvas Clock",
 	"displayValueWasSetByUser": 0,
-	"iconImageName": "meme-ariel"
+	"iconImageName": "meme-ariel",
+	"lastBuiltDate": 520285088
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,
@@ -1786,10 +1797,10 @@
 	"languageDefaultsCSS": {
 		"autoOutputAction": 2,
 		"autoOutputPathFilenamePattern": "*.css",
-		"autoOutputPathRelativePath": "",
+		"autoOutputPathRelativePath": "..\/css",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 0,
+		"autoOutputPathStyle": 1,
 		"createSourceMap": 0,
 		"outputStyle": 3,
 		"shouldRunAutoprefixer": 0,
