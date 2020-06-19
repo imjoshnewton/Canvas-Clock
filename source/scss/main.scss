@@ -1,25 +1,27 @@
 $black: #000;
 $grey: #333;
-$white: rgba(255, 255, 255, .95);
-$delay-time-1: 1s;
-$delay-time-2: 250ms;
+$white: rgba(255, 255, 255, 0.95);
+$animation-time-1: 1s;
+$animation-time-2: 250ms;
+$animation-time-3: 500ms;
 
 body,
 html {
   background: $grey;
+  font-family: "Roboto", Verdana, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 h1 {
   background: $grey;
-  background: -webkit-linear-gradient(right, $white, #FF95BB, #709996, $white);
-  background: linear-gradient(to left, $white, #FF95BB, #709996, $white);
-  background: -o-linear-gradient(right, $white, #FF95BB, #709996, $white);
-  background: -moz-linear-gradient(right, $white, #FF95BB, #709996, $white);
+  background: -webkit-linear-gradient(right, $white, #ff95bb, #709996, $white);
+  background: linear-gradient(to left, $white, #ff95bb, #709996, $white);
+  background: -o-linear-gradient(right, $white, #ff95bb, #709996, $white);
+  background: -moz-linear-gradient(right, $white, #ff95bb, #709996, $white);
   -webkit-background-clip: text;
   color: $white;
-  font-family: 'Roboto', Verdana, sans-serif;
+  display: none;
   font-size: 50px;
   font-weight: 300;
   line-height: 55px;
@@ -30,7 +32,17 @@ h1 {
   width: 100%;
 }
 
+p {
+  color: $white;
+  opacity: 0.6;
+  text-align: center;
+
+  a {
+    color: $white;
+  }
+}
+
 canvas {
-  animation-delay: $delay-time-2;
+  animation-delay: $animation-time-3;
   background: $grey;
 }

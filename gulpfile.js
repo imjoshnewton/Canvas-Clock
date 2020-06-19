@@ -21,7 +21,7 @@ function clean(cb) {
 }
 
 function css(cb) {
-  return src("source/scss/*.scss")
+  return src("source/scss/*.*")
     .pipe(
       sass({
         outputStyle: "compressed",
