@@ -1,0 +1,38 @@
+{
+  "name": "canvas-clock",
+  "version": "1.0.0",
+  "description": "Concentric circle clock with HTML5 canvas",
+  "main": "gulpfile.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "browser-sync": "^2.26.7",
+    "del": "^4.1.1",
+    "es6-promise": "^4.2.8",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^6.0.0",
+    "gulp-sass": "^3.2.1",
+    "gulp-uglify": "^2.1.0",
+    "gulp-util": "^3.0.8",
+    "readable-stream": "^3.4.0"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "start": "gulp",
+    "clean": "rm -rf node_modules",
+    "reinstall": "npm run clean && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imjoshnewton/Canvas-Clock.git"
+  },
+  "author": "Josh Newton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imjoshnewton/Canvas-Clock/issues"
+  },
+  "homepage": "https://github.com/imjoshnewton/Canvas-Clock#readme"
+}
