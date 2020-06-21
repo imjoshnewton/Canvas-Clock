@@ -13,7 +13,7 @@ var canvas = document.getElementById("canvas"),
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   },
-  colors = ["#30CCC1", "#709996", "#55FF94", "#FF95BB", "#CC30B5"],
+  colors = [	"#870734", "#cb2d3e", "#ef473a", "#ffd6bf", "#30122d"], // ["#30CCC1", "#709996", "#55FF94", "#FF95BB", "#CC30B5"], (48,18,45)
   titleOp = 1,
   seconds,
   minutes,
