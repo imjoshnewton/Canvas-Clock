@@ -135,9 +135,9 @@ function animate() {
   d = new Date();
   lastSecond = newSecond;
   newSecond = d.getSeconds();
-  scAngle = Math.PI * 2 * (d.getSeconds() / 60);
-  mnAngle = Math.PI * 2 * (d.getMinutes() / 60);
-  hrAngle = Math.PI * 2 * (d.getHours() / 24);
+  scAngle = d.getSeconds() ? Math.PI * 2 * (d.getSeconds() / 60) : Math.PI * 2;
+  mnAngle = d.getMinutes() ? Math.PI * 2 * (d.getMinutes() / 60) : Math.PI * 2;
+  hrAngle = d.getHours() ? Math.PI * 2 * (d.getHours() / 24) : Math.PI * 2;
 
   if (newSecond > lastSecond || (newSecond === 0 && lastSecond === 59)) {
     split = 0.95;
