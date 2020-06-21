@@ -171,6 +171,72 @@ function animate() {
 
   c.fillStyle = "rgba(235,235,235," + split + ")";
   c.fillText(":", cCenter.x, cCenter.y - fontSize / 15);
+
+  c.fillStyle = "rgba(255,255,255,0.95)";
+
+  for (i = 0; i < 60; i++) {
+    c.save();
+    c.translate(cCenter.x, cCenter.y);
+    c.translate(
+      seconds.radius * Math.sin(Math.PI * 2 * (i / 60)),
+      seconds.radius * Math.cos(Math.PI * 2 * (i / 60))
+    );
+    //c.rotate(-Math.PI / 2);
+
+    c.beginPath();
+    c.rotate(-Math.PI * 2 * (i / 60));
+    if (i % 5) {
+      c.fillRect(0, 10, 2, 15);
+    } else {
+      c.fillRect(0, 0, 2, 25);
+    }
+    c.fill();
+    c.closePath();
+
+    c.restore();
+
+    c.save();
+    c.translate(cCenter.x, cCenter.y);
+    c.translate(
+      minutes.radius * Math.sin(Math.PI * 2 * (i / 60)),
+      minutes.radius * Math.cos(Math.PI * 2 * (i / 60))
+    );
+    //c.rotate(-Math.PI / 2);
+
+    c.beginPath();
+    c.rotate(-Math.PI * 2 * (i / 60));
+    if (i % 5) {
+      c.fillRect(0, 10, 2, 15);
+    } else {
+      c.fillRect(0, 0, 2, 25);
+    }
+    c.fill();
+    c.closePath();
+
+    c.restore();
+  }
+
+  for (i = 0; i < 24; i++) {
+    c.save();
+    c.translate(cCenter.x, cCenter.y);
+    c.translate(
+      hours.radius * Math.sin(Math.PI * 2 * (i / 24)),
+      hours.radius * Math.cos(Math.PI * 2 * (i / 24))
+    );
+    //c.rotate(-Math.PI / 2);
+
+    c.beginPath();
+    c.rotate(-Math.PI * 2 * (i / 24));
+    if (i % 3) {
+      c.fillRect(0, 10, 2, 15);
+    } else {
+      c.fillRect(0, 0, 2, 25);
+    }
+    c.fill();
+    c.closePath();
+
+    c.restore();
+  }
 }
 
 // Get Things Going
