@@ -18,7 +18,10 @@ var canvas = document.getElementById("canvas"),
   seconds,
   minutes,
   hours,
-  smallDim;
+  smallDim,
+  scAngle,
+  mnAngle,
+  hrAngle;
 
 canvas.width = window.innerWidth;
 canvas.height =
@@ -59,6 +62,10 @@ cCenter = {
   x: canvas.width / 2,
   y: canvas.height / 2,
 };
+
+function map_range(value, low1, high1, low2, high2) {
+  return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
+}
 
 // Objects
 function Object(x, y, radius, color1, color2) {
@@ -128,6 +135,9 @@ function animate() {
   d = new Date();
   lastSecond = newSecond;
   newSecond = d.getSeconds();
+  scAngle = Math.PI * 2 * (d.getSeconds() / 60);
+  mnAngle = Math.PI * 2 * (d.getMinutes() / 60);
+  hrAngle = Math.PI * 2 * (d.getHours() / 24);
 
   if (newSecond > lastSecond || (newSecond === 0 && lastSecond === 59)) {
     split = 0.95;
@@ -144,9 +154,9 @@ function animate() {
 
   c.clearRect(0, 0, canvas.width, canvas.height);
 
-  seconds.update(Math.PI * 2 * (d.getSeconds() / 59) + 0.01);
-  minutes.update(Math.PI * 2 * (d.getMinutes() / 60) + 0.01);
-  hours.update(Math.PI * 2 * (d.getHours() / 24) + 0.01);
+  seconds.update(scAngle); // + 0.01);
+  minutes.update(mnAngle); // + 0.01);
+  hours.update(hrAngle); // + 0.01);
 
   c.textBaseline = "middle";
   c.textAlign = "center";
