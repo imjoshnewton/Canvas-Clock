@@ -5,8 +5,10 @@ var canvas = document.getElementById("canvas"),
   lastSecond = 0,
   newSecond = 0,
   fontSize = 30,
-  minRads = [105, 85, 65],
-  radRatios = [0.45, 0.37, 0.29],
+  minRads = [105, 85, 65, 45, 35, 25, 5],
+  radRatios = [0.45, 0.37, 0.29, 0.21, 0.17, 0.13, 0.05],
+  index = 4,
+  strokeIndex = 5,
   WIDTH_CONST = 5,
   minWidth = 15,
   mouse = {
@@ -17,12 +19,14 @@ var canvas = document.getElementById("canvas"),
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   },
-  colors = ["#30122d", "#870734", "#cb2d3e", "#ef473a", "C1EEFF", "#ffd6bf"], // ["#30CCC1", "#709996", "#55FF94", "#FF95BB", "#CC30B5"], (48,18,45)
+  colors = ["#30122d", "#870734", "#cb2d3e", "#ef473a", "#C1EEFF", "#ffd6bf"], // ["#30CCC1", "#709996", "#55FF94", "#FF95BB", "#CC30B5"], (48,18,45)
   titleOp = 1,
+  millis,
   seconds,
   minutes,
   hours,
   smallDim,
+  milAngle,
   scAngle,
   mnAngle,
   hrAngle;
@@ -36,7 +40,7 @@ cCenter = {
 };
 
 // Objects
-function Object(x, y, radius, stops, color1, drawTicks) {
+function Arc(x, y, radius, stops, color1, drawTicks, mod) {
   this.x = x;
   this.y = y;
   this.angle = 0;
@@ -45,6 +49,7 @@ function Object(x, y, radius, stops, color1, drawTicks) {
   this.color1 = color1;
   // this.color2 = color2 || color1;
   this.drawTicks = drawTicks || false;
+  this.mod = mod || 12;
   this.grad = c.createLinearGradient(
     -this.radius,
     this.radius / 2,
@@ -60,8 +65,8 @@ function Object(x, y, radius, stops, color1, drawTicks) {
 
   this.draw = function (angle) {
     c.lineWidth =
-      smallDim * radRatios[2] > minRads[2]
-        ? (smallDim * radRatios[2]) / WIDTH_CONST
+      smallDim * radRatios[strokeIndex] > minRads[strokeIndex]
+        ? (smallDim * radRatios[strokeIndex]) / WIDTH_CONST
         : minWidth;
 
     c.save();
@@ -79,18 +84,20 @@ function Object(x, y, radius, stops, color1, drawTicks) {
 
     if (this.drawTicks) {
       c.fillStyle = "rgba(255,248,240,0.95)";
-      for (var i = 0; i < this.stops; i++) {
+      for (var i = 0; i < (this.stops > 100 ? 100 : this.stops); i++) {
         c.save();
-        c.translate(cCenter.x, cCenter.y);
+        c.translate(this.x, this.y);
         c.translate(
-          this.radius * Math.sin(Math.PI * 2 * (i / this.stops)),
-          this.radius * Math.cos(Math.PI * 2 * (i / this.stops))
+          this.radius *
+            Math.sin(Math.PI * 2 * (i / (this.stops > 100 ? 100 : this.stops))),
+          this.radius *
+            Math.cos(Math.PI * 2 * (i / (this.stops > 100 ? 100 : this.stops)))
         );
         //c.rotate(-Math.PI / 2);
 
         c.beginPath();
-        c.rotate(-Math.PI * 2 * (i / this.stops));
-        if (i % Math.ceil(this.stops / 12)) {
+        c.rotate(-Math.PI * 2 * (i / (this.stops > 100 ? 100 : this.stops)));
+        if (i % Math.ceil(this.stops / this.mod)) {
           c.fillRect(0, c.lineWidth / 2 - c.lineWidth / 3, 2, c.lineWidth / 3);
         } else {
           c.fillRect(0, 0, 2, c.lineWidth / 2);
@@ -108,29 +115,46 @@ function Object(x, y, radius, stops, color1, drawTicks) {
 function init() {
   smallDim = canvas.height < canvas.width ? canvas.height : canvas.width;
 
-  seconds = new Object(
-    cCenter.x,
-    cCenter.y,
-    smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
-    60,
-    colors[3],
+  hours = new Arc(
+    cCenter.x / 2,
+    cCenter.y / 2,
+    smallDim * radRatios[index] > minRads[index]
+      ? smallDim * radRatios[index]
+      : minRads[index], // smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
+    24,
+    colors[1],
     true
   );
-  minutes = new Object(
-    cCenter.x,
-    cCenter.y,
-    smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
+  minutes = new Arc(
+    cCenter.x * 1.5,
+    cCenter.y / 2,
+    smallDim * radRatios[index] > minRads[index]
+      ? smallDim * radRatios[index]
+      : minRads[index], // smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
     60,
     colors[2],
     true
   );
-  hours = new Object(
-    cCenter.x,
-    cCenter.y,
-    smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
-    24,
-    colors[1],
+  seconds = new Arc(
+    cCenter.x / 2,
+    cCenter.y * 1.5,
+    smallDim * radRatios[index] > minRads[index]
+      ? smallDim * radRatios[index]
+      : minRads[index], // smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
+    60,
+    colors[3],
     true
+  );
+  millis = new Arc(
+    cCenter.x * 1.5,
+    cCenter.y * 1.5,
+    smallDim * radRatios[index] > minRads[index]
+      ? smallDim * radRatios[index]
+      : minRads[index],
+    1000,
+    colors[4],
+    true,
+    100
   );
 }
 
@@ -141,6 +165,9 @@ function animate() {
   d = new Date();
   lastSecond = newSecond;
   newSecond = d.getSeconds();
+  milAngle = d.getMilliseconds()
+    ? Math.PI * 2 * (d.getMilliseconds() / millis.stops)
+    : Math.PI * 2;
   scAngle = d.getSeconds()
     ? Math.PI * 2 * (d.getSeconds() / seconds.stops)
     : Math.PI * 2;
@@ -157,10 +184,13 @@ function animate() {
     split -= 0.015;
   }
 
-  fontSize = smallDim * 0.29 > 65 ? ((smallDim * 0.29) / 5) * 2.3 : 30;
+  console.log(d.getMilliseconds());
+
+  fontSize = smallDim * 0.29 > 65 ? ((smallDim * 0.29) / 5) * 2.3 : fontSize;
 
   c.clearRect(0, 0, canvas.width, canvas.height);
 
+  millis.update(milAngle);
   seconds.update(scAngle); // + 0.01);
   minutes.update(mnAngle); // + 0.01);
   hours.update(hrAngle); // + 0.01);
