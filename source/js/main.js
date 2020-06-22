@@ -220,7 +220,7 @@ function animate() {
   c.fillText(("0" + d.getHours()).slice(-2), hours.x, hours.y);
   c.fillText(("0" + d.getMinutes()).slice(-2), minutes.x, minutes.y);
   c.fillText(("0" + d.getSeconds()).slice(-2), seconds.x, seconds.y);
-  c.fillText(d.getMilliseconds()).slice(-2), millis.x, millis.y);
+  c.fillText(d.getMilliseconds(), millis.x, millis.y);
 }
 
 // Get Things Going
