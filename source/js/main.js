@@ -5,6 +5,10 @@ var canvas = document.getElementById("canvas"),
   lastSecond = 0,
   newSecond = 0,
   fontSize = 30,
+  minRad = [105,85,65],
+  radRatios = [0.45,0.37,0.29],
+  WIDTH_CONST = 5,
+  minWidth = 15,
   mouse = {
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
@@ -32,13 +36,15 @@ cCenter = {
 };
 
 // Objects
-function Object(x, y, radius, color1, color2) {
+function Object(x, y, radius, stops, color1, drawTicks) {
   this.x = x;
   this.y = y;
   this.angle = 0;
   this.radius = radius;
+  this.stops = stops;
   this.color1 = color1;
-  this.color2 = color2 || color1;
+  // this.color2 = color2 || color1;
+  this.drawTicks = drawTicks || false;
   this.grad = c.createLinearGradient(
     -this.radius,
     this.radius / 2,
@@ -46,7 +52,7 @@ function Object(x, y, radius, color1, color2) {
     this.radius / 2
   );
   this.grad.addColorStop(0, this.color1);
-  this.grad.addColorStop(1, this.color2);
+  this.grad.addColorStop(1, this.color1);
 
   this.update = function (angle) {
     this.draw(angle);
@@ -59,7 +65,7 @@ function Object(x, y, radius, color1, color2) {
 
     c.beginPath();
     c.arc(0, 0, this.radius, 0, angle, false);
-    c.lineWidth = smallDim * 0.29 > 65 ? (smallDim * 0.29) / 5 : 15;
+    c.lineWidth = smallDim * radRatios[2] > minRad[2] ? (smallDim * radRatios[2]) / WIDTH_CONST : minWidth;
     c.strokeStyle = this.grad;
     c.stroke();
     c.closePath();
@@ -75,19 +81,19 @@ function init() {
   seconds = new Object(
     cCenter.x,
     cCenter.y,
-    smallDim * 0.29 > 65 ? smallDim * 0.29 : 65,
+    smallDim * radRatios[2] > minRad[2] ? smallDim * radRatios[2] : minRad[2],
     colors[3]
   );
   minutes = new Object(
     cCenter.x,
     cCenter.y,
-    smallDim * 0.37 > 85 ? smallDim * 0.37 : 85,
+    smallDim * radRatios[1] > minRad[1] ? smallDim * radRatios[1] : minRad[1],
     colors[2]
   );
   hours = new Object(
     cCenter.x,
     cCenter.y,
-    smallDim * 0.45 > 105 ? smallDim * 0.45 : 105,
+    smallDim * radRatios[0] > minRad[0] ? smallDim * radRatios[0] : minRad[0],
     colors[1]
   );
 }
