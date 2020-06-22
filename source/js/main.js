@@ -217,9 +217,9 @@ function animate() {
 
   c.font = fontSize * 0.6 + "px 'Roboto'";
   c.fillStyle = "rgba(255,248,240,0.95)";
-  c.fillText("0" + d.getHours()).slice(-2), hours.x, hours.y);
-  c.fillText("0" + d.getMinutes()).slice(-2), minutes.x, minutes.y);
-  c.fillText("0" + d.getSeconds()).slice(-2), seconds.x, seconds.y);
+  c.fillText(("0" + d.getHours()).slice(-2), hours.x, hours.y);
+  c.fillText(("0" + d.getMinutes()).slice(-2), minutes.x, minutes.y);
+  c.fillText(("0" + d.getSeconds()).slice(-2), seconds.x, seconds.y);
   c.fillText(d.getMilliseconds()).slice(-2), millis.x, millis.y);
 }
 
