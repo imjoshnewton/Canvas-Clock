@@ -29,7 +29,9 @@ var canvas = document.getElementById("canvas"),
   milAngle,
   scAngle,
   mnAngle,
-  hrAngle;
+  hrAngle,
+  times = [],
+  fps;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - getElHeight("credits");
@@ -162,6 +164,13 @@ function init() {
 function animate() {
   requestAnimationFrame(animate);
 
+  const now = performance.now();
+  while (times.length > 0 && times[0] <= now - 1000) {
+    times.shift();
+  }
+  times.push(now);
+  fps = times.length;
+
   d = new Date();
   lastSecond = newSecond;
   newSecond = d.getSeconds();
@@ -181,10 +190,8 @@ function animate() {
   if (newSecond > lastSecond || (newSecond === 0 && lastSecond === 59)) {
     split = 0.95;
   } else {
-    split -= 0.015;
+    split -= 0.95 / fps;
   }
-
-  console.log(d.getMilliseconds());
 
   fontSize = smallDim * 0.29 > 65 ? ((smallDim * 0.29) / 5) * 2.3 : fontSize;
 
@@ -198,7 +205,6 @@ function animate() {
   c.textBaseline = "middle";
   c.textAlign = "center";
   c.font = fontSize + "px 'Roboto'";
-
   c.fillStyle = "rgba(255,248,240,0.95)";
   c.fillText(
     ("0" + d.getHours()).slice(-2) + "  " + ("0" + d.getMinutes()).slice(-2),
@@ -208,6 +214,13 @@ function animate() {
 
   c.fillStyle = "rgba(255,248,240," + split + ")";
   c.fillText(":", cCenter.x, cCenter.y - fontSize / 15);
+
+  c.font = fontSize * 0.6 + "px 'Roboto'";
+  c.fillStyle = "rgba(255,248,240,0.95)";
+  c.fillText("HH", hours.x, hours.y);
+  c.fillText("MM", minutes.x, minutes.y);
+  c.fillText("SS", seconds.x, seconds.y);
+  c.fillText("ss", millis.x, millis.y);
 }
 
 // Get Things Going
