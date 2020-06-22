@@ -116,43 +116,39 @@ function Arc(x, y, radius, stops, color1, drawTicks, mod) {
 // Implementation
 function init() {
   smallDim = canvas.height < canvas.width ? canvas.height : canvas.width;
+  var arcRad = smallDim * radRatios[index] > minRads[index]
+      ? smallDim * radRatios[index]
+      : minRads[index];
+  var offset = (arcRad + arcRad*0.10)
 
   hours = new Arc(
-    cCenter.x - (smallDim / 3.25),
-    cCenter.y,
-    smallDim * radRatios[index] > minRads[index]
-      ? smallDim * radRatios[index]
-      : minRads[index], // smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
+    cCenter.x - offset,
+    cCenter.y - offset,
+    arcRad, // smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
     24,
     colors[1],
     true
   );
   minutes = new Arc(
-    cCenter.x,
-    cCenter.y - (smallDim / 3.25),
-    smallDim * radRatios[index] > minRads[index]
-      ? smallDim * radRatios[index]
-      : minRads[index], // smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
+    cCenter.x + offset,
+    cCenter.y - offset,
+    arcRad, // smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
     60,
     colors[2],
     true
   );
   seconds = new Arc(
-    cCenter.x,
-    cCenter.y + (smallDim / 3.25),
-    smallDim * radRatios[index] > minRads[index]
-      ? smallDim * radRatios[index]
-      : minRads[index], // smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
+    cCenter.x - offset,
+    cCenter.y + offset,
+    arcRad, // smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
     60,
     colors[3],
     true
   );
   millis = new Arc(
-    cCenter.x + (smallDim / 3.25),
-    cCenter.y,
-    smallDim * radRatios[index] > minRads[index]
-      ? smallDim * radRatios[index]
-      : minRads[index],
+    cCenter.x + offset,
+    cCenter.y + offset,
+    arcRad,
     1000,
     colors[4],
     true,
