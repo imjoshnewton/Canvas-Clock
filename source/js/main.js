@@ -129,7 +129,7 @@ function init() {
   );
   minutes = new Arc(
     cCenter.x,
-    cCenter.y - (smallDim / 3,
+    cCenter.y - (smallDim / 3),
     smallDim * radRatios[index] > minRads[index]
       ? smallDim * radRatios[index]
       : minRads[index], // smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
