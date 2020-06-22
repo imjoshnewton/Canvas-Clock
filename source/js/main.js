@@ -5,8 +5,8 @@ var canvas = document.getElementById("canvas"),
   lastSecond = 0,
   newSecond = 0,
   fontSize = 30,
-  minRad = [105,85,65],
-  radRatios = [0.45,0.37,0.29],
+  minRad = [105, 85, 65],
+  radRatios = [0.45, 0.37, 0.29],
   WIDTH_CONST = 5,
   minWidth = 15,
   mouse = {
@@ -59,18 +59,48 @@ function Object(x, y, radius, stops, color1, drawTicks) {
   };
 
   this.draw = function (angle) {
+    c.lineWidth =
+      smallDim * radRatios[2] > minRad[2]
+        ? (smallDim * radRatios[2]) / WIDTH_CONST
+        : minWidth;
+
     c.save();
     c.translate(this.x, this.y);
     c.rotate(-Math.PI / 2);
 
     c.beginPath();
     c.arc(0, 0, this.radius, 0, angle, false);
-    c.lineWidth = smallDim * radRatios[2] > minRad[2] ? (smallDim * radRatios[2]) / WIDTH_CONST : minWidth;
+
     c.strokeStyle = this.grad;
     c.stroke();
     c.closePath();
 
     c.restore();
+
+    if (this.drawTicks) {
+      c.fillStyle = "rgba(255,248,240,0.95)";
+      for (var i = 0; i < this.stops; i++) {
+        c.save();
+        c.translate(cCenter.x, cCenter.y);
+        c.translate(
+          this.radius * Math.sin(Math.PI * 2 * (i / this.stops)),
+          this.radius * Math.cos(Math.PI * 2 * (i / this.stops))
+        );
+        //c.rotate(-Math.PI / 2);
+
+        c.beginPath();
+        c.rotate(-Math.PI * 2 * (i / this.stops));
+        if (i % Math.ceil(this.stops / 12)) {
+          c.fillRect(0, c.lineWidth / 2 - c.lineWidth / 3, 2, c.lineWidth / 3);
+        } else {
+          c.fillRect(0, 0, 2, c.lineWidth / 2);
+        }
+        c.fill();
+        c.closePath();
+
+        c.restore();
+      }
+    }
   };
 }
 
@@ -82,19 +112,25 @@ function init() {
     cCenter.x,
     cCenter.y,
     smallDim * radRatios[2] > minRad[2] ? smallDim * radRatios[2] : minRad[2],
-    colors[3]
+    60,
+    colors[3],
+    true
   );
   minutes = new Object(
     cCenter.x,
     cCenter.y,
     smallDim * radRatios[1] > minRad[1] ? smallDim * radRatios[1] : minRad[1],
-    colors[2]
+    60,
+    colors[2],
+    true
   );
   hours = new Object(
     cCenter.x,
     cCenter.y,
     smallDim * radRatios[0] > minRad[0] ? smallDim * radRatios[0] : minRad[0],
-    colors[1]
+    24,
+    colors[1],
+    true
   );
 }
 
@@ -105,17 +141,20 @@ function animate() {
   d = new Date();
   lastSecond = newSecond;
   newSecond = d.getSeconds();
-  scAngle = d.getSeconds() ? Math.PI * 2 * (d.getSeconds() / 60) : Math.PI * 2;
-  mnAngle = d.getMinutes() ? Math.PI * 2 * (d.getMinutes() / 60) : Math.PI * 2;
-  hrAngle = d.getHours() ? Math.PI * 2 * (d.getHours() / 24) : Math.PI * 2;
+  scAngle = d.getSeconds()
+    ? Math.PI * 2 * (d.getSeconds() / seconds.stops)
+    : Math.PI * 2;
+  mnAngle = d.getMinutes()
+    ? Math.PI * 2 * (d.getMinutes() / minutes.stops)
+    : Math.PI * 2;
+  hrAngle = d.getHours()
+    ? Math.PI * 2 * (d.getHours() / hours.stops)
+    : Math.PI * 2;
 
   if (newSecond > lastSecond || (newSecond === 0 && lastSecond === 59)) {
     split = 0.95;
   } else {
     split -= 0.015;
-    if (titleOp > 0.15) {
-      titleOp -= 0.0015;
-    }
   }
 
   fontSize = smallDim * 0.29 > 65 ? ((smallDim * 0.29) / 5) * 2.3 : 30;
@@ -139,72 +178,6 @@ function animate() {
 
   c.fillStyle = "rgba(255,248,240," + split + ")";
   c.fillText(":", cCenter.x, cCenter.y - fontSize / 15);
-
-  c.fillStyle = "rgba(255,248,240,0.95)"; // "rgba(255,255,255,0.95)";
-
-  for (i = 0; i < 60; i++) {
-    c.save();
-    c.translate(cCenter.x, cCenter.y);
-    c.translate(
-      seconds.radius * Math.sin(Math.PI * 2 * (i / 60)),
-      seconds.radius * Math.cos(Math.PI * 2 * (i / 60))
-    );
-    //c.rotate(-Math.PI / 2);
-
-    c.beginPath();
-    c.rotate(-Math.PI * 2 * (i / 60));
-    if (i % 5) {
-      c.fillRect(0, 10, 2, 15);
-    } else {
-      c.fillRect(0, 0, 2, 25);
-    }
-    c.fill();
-    c.closePath();
-
-    c.restore();
-
-    c.save();
-    c.translate(cCenter.x, cCenter.y);
-    c.translate(
-      minutes.radius * Math.sin(Math.PI * 2 * (i / 60)),
-      minutes.radius * Math.cos(Math.PI * 2 * (i / 60))
-    );
-    //c.rotate(-Math.PI / 2);
-
-    c.beginPath();
-    c.rotate(-Math.PI * 2 * (i / 60));
-    if (i % 5) {
-      c.fillRect(0, 10, 2, 15);
-    } else {
-      c.fillRect(0, 0, 2, 25);
-    }
-    c.fill();
-    c.closePath();
-
-    c.restore();
-  }
-
-  for (i = 0; i < 24; i++) {
-    c.save();
-    c.translate(cCenter.x, cCenter.y);
-    c.translate(
-      hours.radius * Math.sin(Math.PI * 2 * (i / 24)),
-      hours.radius * Math.cos(Math.PI * 2 * (i / 24))
-    );
-    //c.rotate(-Math.PI / 2);
-
-    c.beginPath();
-    c.rotate(-Math.PI * 2 * (i / 24));
-    if (i % 3) {
-      c.fillRect(0, 10, 2, 15);
-    } else {
-      c.fillRect(0, 0, 2, 25);
-    }
-    c.fill();
-    c.closePath();
-
-    c.restore();
-  }
 }
 
 // Get Things Going
