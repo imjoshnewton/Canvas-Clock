@@ -119,7 +119,7 @@ function init() {
   var arcRad = smallDim * radRatios[index] > minRads[index]
       ? smallDim * radRatios[index]
       : minRads[index];
-  var offset = (arcRad + arcRad*0.10)
+  var offset = (arcRad + arcRad*0.25)
 
   hours = new Arc(
     cCenter.x - offset,
