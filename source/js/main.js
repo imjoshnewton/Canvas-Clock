@@ -148,7 +148,7 @@ function init() {
     true
   );
   millis = new Arc(
-    cCenter.x - (smallDim / 4),,
+    cCenter.x - (smallDim / 4),
     cCenter.y,
     smallDim * radRatios[index] > minRads[index]
       ? smallDim * radRatios[index]
