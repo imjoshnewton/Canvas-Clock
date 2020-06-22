@@ -25,7 +25,9 @@ var canvas = document.getElementById("canvas"),
   smallDim,
   scAngle,
   mnAngle,
-  hrAngle;
+  hrAngle,
+  times = [],
+  fps;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - getElHeight("credits");
@@ -137,6 +139,13 @@ function init() {
 // Animation Loop
 function animate() {
   requestAnimationFrame(animate);
+  
+  const now = performance.now();
+  while (times.length > 0 && times[0] <= now - 1000) {
+    times.shift();
+  }
+  times.push(now);
+  fps = times.length;
 
   d = new Date();
   lastSecond = newSecond;
@@ -154,7 +163,7 @@ function animate() {
   if (newSecond > lastSecond || (newSecond === 0 && lastSecond === 59)) {
     split = 0.95;
   } else {
-    split -= 0.015;
+    split -= 0.95 / fps;
   }
 
   fontSize = smallDim * 0.29 > 65 ? ((smallDim * 0.29) / 5) * 2.3 : 30;
