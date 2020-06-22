@@ -112,7 +112,7 @@ function init() {
     cCenter.x,
     cCenter.y,
     smallDim * 0.29 > 65 ? smallDim * 0.29 : 65,
-    colors[3]
+    colors[2]
   );
   minutes = new Object(
     cCenter.x,
