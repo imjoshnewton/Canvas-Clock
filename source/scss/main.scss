@@ -1,5 +1,6 @@
 $black: #000;
 $grey: #617073;
+$background: #30122D;
 $white: rgba(255, 255, 255, 0.95);
 $animation-time-1: 1s;
 $animation-time-2: 250ms;
@@ -7,7 +8,7 @@ $animation-time-3: 500ms;
 
 body,
 html {
-  background: $grey;
+  background: $background;
   font-family: "Roboto", Verdana, sans-serif;
   margin: 0;
   padding: 0;

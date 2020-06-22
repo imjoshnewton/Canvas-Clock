@@ -118,13 +118,13 @@ function init() {
     cCenter.x,
     cCenter.y,
     smallDim * 0.37 > 85 ? smallDim * 0.37 : 85,
-    colors[1]
+    colors[2]
   );
   hours = new Object(
     cCenter.x,
     cCenter.y,
     smallDim * 0.45 > 105 ? smallDim * 0.45 : 105,
-    colors[0]
+    colors[1]
   );
 }
 
