@@ -118,8 +118,8 @@ function init() {
   smallDim = canvas.height < canvas.width ? canvas.height : canvas.width;
 
   hours = new Arc(
-    cCenter.x,
-    cCenter.y - (smallDim / 4),
+    cCenter.x - (smallDim / 3),
+    cCenter.y,
     smallDim * radRatios[index] > minRads[index]
       ? smallDim * radRatios[index]
       : minRads[index], // smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
@@ -128,8 +128,8 @@ function init() {
     true
   );
   minutes = new Arc(
-    cCenter.x + (smallDim / 4),
-    cCenter.y,
+    cCenter.x,
+    cCenter.y - (smallDim / 3,
     smallDim * radRatios[index] > minRads[index]
       ? smallDim * radRatios[index]
       : minRads[index], // smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
@@ -139,7 +139,7 @@ function init() {
   );
   seconds = new Arc(
     cCenter.x,
-    cCenter.y + (smallDim / 4),
+    cCenter.y + (smallDim / 3),
     smallDim * radRatios[index] > minRads[index]
       ? smallDim * radRatios[index]
       : minRads[index], // smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
@@ -148,7 +148,7 @@ function init() {
     true
   );
   millis = new Arc(
-    cCenter.x - (smallDim / 4),
+    cCenter.x + (smallDim / 3),
     cCenter.y,
     smallDim * radRatios[index] > minRads[index]
       ? smallDim * radRatios[index]
