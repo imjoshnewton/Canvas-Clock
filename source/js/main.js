@@ -5,7 +5,7 @@ var canvas = document.getElementById("canvas"),
   lastSecond = 0,
   newSecond = 0,
   fontSize = 30,
-  minRad = [105, 85, 65],
+  minRads = [105, 85, 65],
   radRatios = [0.45, 0.37, 0.29],
   WIDTH_CONST = 5,
   minWidth = 15,
@@ -60,7 +60,7 @@ function Object(x, y, radius, stops, color1, drawTicks) {
 
   this.draw = function (angle) {
     c.lineWidth =
-      smallDim * radRatios[2] > minRad[2]
+      smallDim * radRatios[2] > minRads[2]
         ? (smallDim * radRatios[2]) / WIDTH_CONST
         : minWidth;
 
@@ -111,7 +111,7 @@ function init() {
   seconds = new Object(
     cCenter.x,
     cCenter.y,
-    smallDim * radRatios[2] > minRad[2] ? smallDim * radRatios[2] : minRad[2],
+    smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
     60,
     colors[3],
     true
@@ -119,7 +119,7 @@ function init() {
   minutes = new Object(
     cCenter.x,
     cCenter.y,
-    smallDim * radRatios[1] > minRad[1] ? smallDim * radRatios[1] : minRad[1],
+    smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
     60,
     colors[2],
     true
@@ -127,7 +127,7 @@ function init() {
   hours = new Object(
     cCenter.x,
     cCenter.y,
-    smallDim * radRatios[0] > minRad[0] ? smallDim * radRatios[0] : minRad[0],
+    smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
     24,
     colors[1],
     true
@@ -171,7 +171,7 @@ function animate() {
 
   c.fillStyle = "rgba(255,248,240,0.95)";
   c.fillText(
-    ("0" + d.getHours()).slice(-2) + " " + ("0" + d.getMinutes()).slice(-2),
+    ("0" + d.getHours()).slice(-2) + "  " + ("0" + d.getMinutes()).slice(-2),
     cCenter.x,
     cCenter.y
   );
