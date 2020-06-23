@@ -1,6 +1,7 @@
 var canvas = document.getElementById("canvas"),
   c = canvas.getContext("2d"),
   d = new Date(),
+  cCenter = {},
   split = 0.95,
   lastSecond = 0,
   newSecond = 0,
@@ -33,15 +34,7 @@ var canvas = document.getElementById("canvas"),
   times = [],
   fps;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight - getElHeight("credits");
-
-cCenter = {
-  x: canvas.width / 2,
-  y: canvas.height / 2,
-};
-
-// Objects
+// Arcs
 function Arc(x, y, radius, stops, color1, drawTicks, mod) {
   this.x = x;
   this.y = y;
@@ -115,45 +108,92 @@ function Arc(x, y, radius, stops, color1, drawTicks, mod) {
 
 // Implementation
 function init() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight - getElHeight("credits");
+
+  cCenter = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+  };
+
   smallDim = canvas.height < canvas.width ? canvas.height : canvas.width;
-  var arcRad = smallDim * radRatios[index] > minRads[index]
+
+  var arcRad =
+    smallDim * radRatios[index] > minRads[index]
       ? smallDim * radRatios[index]
       : minRads[index];
-  var offset = (arcRad + arcRad*0.25)
+  var offset = arcRad + arcRad * 0.25;
+  var ratio = canvas.width / canvas.height;
 
-  hours = new Arc(
-    cCenter.x - offset,
-    cCenter.y - offset,
-    arcRad, // smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
-    24,
-    colors[1],
-    true
-  );
-  minutes = new Arc(
-    cCenter.x + offset,
-    cCenter.y - offset,
-    arcRad, // smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
-    60,
-    colors[2],
-    true
-  );
-  seconds = new Arc(
-    cCenter.x - offset,
-    cCenter.y + offset,
-    arcRad, // smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
-    60,
-    colors[3],
-    true
-  );
-  millis = new Arc(
-    cCenter.x + offset,
-    cCenter.y + offset,
-    arcRad,
-    1000,
-    colors[4],
-    true,
-    100
-  );
+  if (Math.floor(ratio)) {
+    hours = new Arc(
+      cCenter.x - offset * 3,
+      cCenter.y,
+      arcRad, // smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
+      24,
+      colors[1],
+      true
+    );
+    minutes = new Arc(
+      cCenter.x - offset,
+      cCenter.y,
+      arcRad, // smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
+      60,
+      colors[2],
+      true
+    );
+    seconds = new Arc(
+      cCenter.x + offset,
+      cCenter.y,
+      arcRad, // smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
+      60,
+      colors[3],
+      true
+    );
+    millis = new Arc(
+      cCenter.x + offset * 3,
+      cCenter.y,
+      arcRad,
+      1000,
+      colors[4],
+      true,
+      100
+    );
+  } else {
+    hours = new Arc(
+      cCenter.x,
+      cCenter.y - offset * 3,
+      arcRad, // smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
+      24,
+      colors[1],
+      true
+    );
+    minutes = new Arc(
+      cCenter.x,
+      cCenter.y - offset,
+      arcRad, // smallDim * radRatios[1] > minRads[1] ? smallDim * radRatios[1] : minRads[1],
+      60,
+      colors[2],
+      true
+    );
+    seconds = new Arc(
+      cCenter.x,
+      cCenter.y + offset,
+      arcRad, // smallDim * radRatios[2] > minRads[2] ? smallDim * radRatios[2] : minRads[2],
+      60,
+      colors[3],
+      true
+    );
+    millis = new Arc(
+      cCenter.x,
+      cCenter.y + offset * 3,
+      arcRad,
+      1000,
+      colors[4],
+      true,
+      100
+    );
+  }
 }
 
 // Animation Loop
@@ -213,10 +253,18 @@ function animate() {
 
   c.font = fontSize + "px 'Roboto'";
   c.fillStyle = "rgba(255,248,240,0.95)";
-  c.fillText(("0" + d.getHours()).slice(-2), hours.x, hours.y);
-  c.fillText(("0" + d.getMinutes()).slice(-2), minutes.x, minutes.y);
-  c.fillText(("0" + d.getSeconds()).slice(-2), seconds.x, seconds.y);
-  c.fillText(d.getMilliseconds(), millis.x, millis.y);
+  c.fillText(("0" + d.getHours()).slice(-2), hours.x, hours.y + fontSize / 15);
+  c.fillText(
+    ("0" + d.getMinutes()).slice(-2),
+    minutes.x,
+    minutes.y + fontSize / 15
+  );
+  c.fillText(
+    ("0" + d.getSeconds()).slice(-2),
+    seconds.x,
+    seconds.y + fontSize / 15
+  );
+  c.fillText(d.getMilliseconds(), millis.x, millis.y + fontSize / 15);
 }
 
 // Get Things Going
@@ -240,6 +288,7 @@ addEventListener("resize", function () {
 
   init();
   animate();
+  window.scrollTo(0, 0);
 });
 
 canvas.addEventListener(
