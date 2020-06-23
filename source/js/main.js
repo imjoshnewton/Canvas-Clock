@@ -197,7 +197,7 @@ function init() {
 
 document.body.style.backgroundColor = colors[6];
 
-document.getElementsByTagName("canvas").style.backgroundColor = colors[6];
+document.getElementsByTagName("*").style.backgroundColor = colors[6];
   
 }
 
