@@ -8,14 +8,14 @@ $animation-time-3: 500ms;
 
 body,
 html {
-  background: $background;
+  // background: $background;
   font-family: "Roboto", Verdana, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 h1 {
-  background: $grey;
+  // background: $grey;
   background: -webkit-linear-gradient(right, $white, #ff95bb, #709996, $white);
   background: linear-gradient(to left, $white, #ff95bb, #709996, $white);
   background: -o-linear-gradient(right, $white, #ff95bb, #709996, $white);
@@ -45,5 +45,5 @@ p {
 
 canvas {
   animation-delay: $animation-time-3;
-  background: $background;
+  // background: $background;
 }
