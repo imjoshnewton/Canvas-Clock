@@ -20,7 +20,7 @@ var canvas = document.getElementById("canvas"),
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   },
-  colors = ["#30122d", "#870734", "#cb2d3e", "#ef473a", "#C1EEFF", "#ffd6bf"], // ["#30CCC1", "#709996", "#55FF94", "#FF95BB", "#CC30B5"], (48,18,45)
+  colors = ["#30122d", "#870734", "#cb2d3e", "#ef473a", "#C1EEFF", "#ffd6bf", "#28353E"], // ["#30CCC1", "#709996", "#55FF94", "#FF95BB", "#CC30B5"], (48,18,45)
   titleOp = 1,
   millis,
   seconds,
@@ -194,6 +194,11 @@ function init() {
       100
     );
   }
+
+document.body.style.backgroundColor = colors[6];
+
+document.getElementsByTagName("canvas").style.backgroundColor = colors[6];
+  
 }
 
 // Animation Loop
