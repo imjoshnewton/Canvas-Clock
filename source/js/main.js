@@ -253,18 +253,18 @@ function animate() {
 
   c.font = fontSize + "px 'Roboto'";
   c.fillStyle = "rgba(255,248,240,0.95)";
-  c.fillText(("0" + d.getHours()).slice(-2), hours.x, hours.y + fontSize / 15);
+  c.fillText(("0" + d.getHours()).slice(-2), hours.x, hours.y + fontSize / 20);
   c.fillText(
     ("0" + d.getMinutes()).slice(-2),
     minutes.x,
-    minutes.y + fontSize / 15
+    minutes.y + fontSize / 20
   );
   c.fillText(
     ("0" + d.getSeconds()).slice(-2),
     seconds.x,
-    seconds.y + fontSize / 15
+    seconds.y + fontSize / 20
   );
-  c.fillText(d.getMilliseconds(), millis.x, millis.y + fontSize / 15);
+  c.fillText(d.getMilliseconds(), millis.x, millis.y + fontSize / 20);
 }
 
 // Get Things Going
