@@ -76,9 +76,9 @@ function Object(x, y, radius, stops, color1, drawTicks) {
     c.strokeStyle = this.grad;
     c.globalAlpha = 0.1;
     c.stroke();
-    c.closePath();
+    //c.closePath();
 
-    c.beginPath();
+    //c.beginPath();
     c.arc(0, 0, this.radius, 0, angle, false);
 
     c.strokeStyle = this.grad;
