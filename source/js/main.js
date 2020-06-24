@@ -69,11 +69,20 @@ function Object(x, y, radius, stops, color1, drawTicks) {
     c.save();
     c.translate(this.x, this.y);
     c.rotate(-Math.PI / 2);
+    
+    c.beginPath();
+    c.arc(0, 0, this.radius, 0, Math.PI*2, false);
+
+    c.strokeStyle = this.grad;
+    c.globalAlpha = 0.1;
+    c.stroke();
+    c.closePath();
 
     c.beginPath();
     c.arc(0, 0, this.radius, 0, angle, false);
 
     c.strokeStyle = this.grad;
+    c.globalAlpha = 1;
     c.stroke();
     c.closePath();
 
@@ -169,14 +178,10 @@ function animate() {
   fontSize = smallDim * 0.29 > 65 ? ((smallDim * 0.29) / 5) * 2.3 : 30;
 
   c.clearRect(0, 0, canvas.width, canvas.height);
-  
-  c.globalAlpha = 0.75;
 
   seconds.update(scAngle); // + 0.01);
   minutes.update(mnAngle); // + 0.01);
   hours.update(hrAngle); // + 0.01);
-  
-  c.globalAlpha = 1;
 
   c.textBaseline = "middle";
   c.textAlign = "center";
