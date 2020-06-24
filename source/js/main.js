@@ -67,11 +67,20 @@ function Arc(x, y, radius, stops, color1, drawTicks, mod) {
     c.save();
     c.translate(this.x, this.y);
     c.rotate(-Math.PI / 2);
+    
+    c.beginPath();
+    c.arc(0, 0, this.radius, 0, Math.PI*2, false);
+
+    c.strokeStyle = this.grad;
+    c.globalAlpha = 0.1;
+    c.stroke();
+    c.closePath();
 
     c.beginPath();
     c.arc(0, 0, this.radius, 0, angle, false);
 
     c.strokeStyle = this.grad;
+    c.globalAlpha = 1;
     c.stroke();
     c.closePath();
 
