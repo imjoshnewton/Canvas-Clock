@@ -69,9 +69,9 @@ function Object(x, y, radius, stops, color1, drawTicks) {
     c.save();
     c.translate(this.x, this.y);
     c.rotate(-Math.PI / 2);
-    
+
     c.beginPath();
-    c.arc(0, 0, this.radius, 0, Math.PI*2, false);
+    c.arc(0, 0, this.radius, 0, Math.PI * 2, false);
 
     c.strokeStyle = this.grad;
     c.globalAlpha = 0.1;
@@ -139,7 +139,7 @@ function init() {
     cCenter.x,
     cCenter.y,
     smallDim * radRatios[0] > minRads[0] ? smallDim * radRatios[0] : minRads[0],
-    24,
+    12,
     colors[1],
     true
   );
@@ -148,7 +148,7 @@ function init() {
 // Animation Loop
 function animate() {
   requestAnimationFrame(animate);
-  
+
   const now = performance.now();
   while (times.length > 0 && times[0] <= now - 1000) {
     times.shift();
@@ -166,7 +166,7 @@ function animate() {
     ? Math.PI * 2 * (d.getMinutes() / minutes.stops)
     : Math.PI * 2;
   hrAngle = d.getHours()
-    ? Math.PI * 2 * (d.getHours() / hours.stops)
+    ? Math.PI * 2 * ((d.getHours() % 12) / hours.stops)
     : Math.PI * 2;
 
   if (newSecond > lastSecond || (newSecond === 0 && lastSecond === 59)) {
