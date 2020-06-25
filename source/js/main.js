@@ -283,7 +283,11 @@ function animate() {
     seconds.x,
     seconds.y + fontSize / 20
   );
-  c.fillText(d.getMilliseconds(), millis.x, millis.y + fontSize / 20);
+  c.fillText(
+    ("0" + d.getMilliseconds()).slice(-3), 
+    millis.x, 
+    millis.y + fontSize / 20
+  );
 }
 
 // Get Things Going
